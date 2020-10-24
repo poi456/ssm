@@ -1,0 +1,55 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/task
+        http://www.springframework.org/schema/task/spring-task.xsd">
+
+    <!--开启注解扫描-->
+    <context:component-scan base-package="cn.itheima">
+        <!--        哪些注解不扫描  type=annotation注解  expression=""注解路径-->
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <!--        只扫那些注解-->
+        <!--        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>-->
+    </context:component-scan>
+    <!--    spring整合Mybatis框架 连接池-->
+    <!--    配置连接池-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+        <property name="jdbcUrl" value="jdbc:mysql:///ssm"></property>
+        <property name="user" value="root"></property>
+        <property name="password" value="123456"></property>
+    </bean>
+<!--    配置工厂-->
+    <bean class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+<!--    配置accountDao接口所在包-->
+    <bean id="scannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="cn.itheima.dao"></property>
+    </bean>
+    <!--    spring整合Mybatis框架-->
+    <!--    配置连接池-->
+<!--    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">-->
+<!--        <property name="driverClass" value="com.mysql.jdbc.Driver"></property>-->
+<!--        <property name="jdbcUrl" value="jdbc:mysql:///ssm"></property>-->
+<!--        <property name="user" value="root"></property>-->
+<!--        <property name="password" value="123456"></property>-->
+<!--    </bean>-->
+<!--    &lt;!&ndash;    配置SqlSessionFactory工厂&ndash;&gt;-->
+<!--    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">-->
+<!--        <property name="dataSource" ref="dataSource"></property>-->
+<!--        <property name="mapperLocations" value=""></property>-->
+<!--    </bean>-->
+<!--    &lt;!&ndash;    配置AccountDao接口所在的包&ndash;&gt;-->
+
+<!--    <bean id="mapperScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">-->
+<!--        <property name="basePackage" value="com.itheima.dao"/>-->
+<!--    </bean>-->
+</beans>
